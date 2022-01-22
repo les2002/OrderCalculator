@@ -13,28 +13,32 @@ namespace CourierKata.OrderCalculator.Tests
                 {
                     Type = ParcelType.Small,
                     Dimensions = new Dimensions() { Height = 10, Length = 10, Width = 10 },
-                    Pricing = new Price() { Currency = "$", Cost = 3},
+                    Pricing = new SpecPrice() { Currency = "$", Cost = 3, ChargePerKg = 2 },
+                    WeightLimit = 1,
                     Selection = Select.AllDimensions
                 },
                 new ParcelSpec()
                 {
                     Type = ParcelType.Medium,
                     Dimensions = new Dimensions() { Height = 50, Length = 50, Width = 50 },
-                    Pricing = new Price() { Currency = "$", Cost = 8},
+                    Pricing = new SpecPrice() { Currency = "$", Cost = 8, ChargePerKg = 2},
+                    WeightLimit = 3,
                     Selection = Select.AllDimensions
                 },
                 new ParcelSpec()
                 {
                     Type = ParcelType.Large,
                     Dimensions = new Dimensions() { Height = 100, Length = 100, Width = 100 },
-                    Pricing = new Price() { Currency = "$", Cost = 15},
+                    Pricing = new SpecPrice() { Currency = "$", Cost = 15, ChargePerKg = 2},
+                    WeightLimit = 6,
                     Selection = Select.AllDimensions
                 },
                 new ParcelSpec()
                 {
                     Type = ParcelType.XL,
                     Dimensions = null,
-                    Pricing = new Price() { Currency = "$", Cost = 25},
+                    Pricing = new SpecPrice() { Currency = "$", Cost = 25, ChargePerKg = 2},
+                    WeightLimit = 10,
                     Selection = Select.AnyDimension
                 }
             };

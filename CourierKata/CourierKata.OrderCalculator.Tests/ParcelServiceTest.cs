@@ -10,11 +10,13 @@ namespace CourierKata.OrderCalculator.Tests
     public class ParcelServiceTest
     {
         private IParcelService parcelService;
+        private IPriceService priceService;
 
         [SetUp]
         public void Setup()
         {
-            parcelService = new ParcelService(ParcelSpecData.specData);
+            priceService = new PriceService(2);
+            parcelService = new ParcelService(priceService, ParcelSpecData.specData);
         }
 
         [Test]

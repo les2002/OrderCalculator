@@ -8,7 +8,8 @@ namespace CourierKata.OrderCalculator.Models
     {
         public ParcelType Type { get; set; }
         public Dimensions Dimensions { get; set; }
-        public Price Pricing { get; set; }
+        public SpecPrice Pricing { get; set; }
+        public decimal WeightLimit { get; set; }
         public Select Selection { get; set; }
     }
 }

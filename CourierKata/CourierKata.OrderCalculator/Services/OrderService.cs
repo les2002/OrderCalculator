@@ -9,10 +9,12 @@ namespace CourierKata.OrderCalculator.Services
     public class OrderService : IOrderService
     {
         private readonly IParcelService parcelService;
+        private readonly IPriceService priceService;
 
-        public OrderService(IParcelService _parcelService)
+        public OrderService(IParcelService _parcelService, IPriceService _priceService)
         {
             parcelService = _parcelService;
+            priceService = _priceService;
         }
 
         public Order GetOrder(List<Parcel> parcelsDimensions)
@@ -21,11 +23,8 @@ namespace CourierKata.OrderCalculator.Services
             var order = new Order()
             {
                 Parcels = parcels,
-                Price = new OrderPrice()
+                Price = GetOrderPrice(parcels)
             };
-            order.Price.Currency = parcels.FirstOrDefault().Price.Currency;
-            order.Price.Cost = parcels.Sum(x => x.Price.Cost);
-            order.Price.SpeedyCost = order.Price.Cost * 2;
             return order;
         }
 
@@ -41,6 +40,11 @@ namespace CourierKata.OrderCalculator.Services
                 }
             }
             return orderParcels;
+        }
+
+        private OrderPrice GetOrderPrice(List<OrderParcel> parcel)
+        {
+            return priceService.GetOrderPrice(parcel);
         }
     }
 }

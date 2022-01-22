@@ -8,10 +8,12 @@ namespace CourierKata.OrderCalculator.Services
 {
     public class ParcelService : IParcelService
     {
+        private readonly IPriceService priceService;
         private readonly List<ParcelSpec> specData;
 
-        public ParcelService(List<ParcelSpec> _specData)
+        public ParcelService(IPriceService _priceService, List<ParcelSpec> _specData)
         {
+            priceService = _priceService;
             specData = _specData;
         }
         public OrderParcel GetOrderParcel(Parcel parcel)
@@ -23,7 +25,11 @@ namespace CourierKata.OrderCalculator.Services
                 if (selectedSpec != null)
                 {
                     orderParcels.Type = selectedSpec.Type;
-                    orderParcels.Price = new ParcelPrice() { Currency = selectedSpec.Pricing.Currency, Cost = selectedSpec.Pricing.Cost, SizeCost = selectedSpec.Pricing.Cost };
+                    if (orderParcels.Weight > selectedSpec.WeightLimit)
+                    {
+                        orderParcels.OverWeight = orderParcels.Weight - selectedSpec.WeightLimit;
+                    }
+                    orderParcels.Price = GetParcelPrice(orderParcels, selectedSpec.Pricing);
                 }
             }
 
@@ -36,12 +42,18 @@ namespace CourierKata.OrderCalculator.Services
             {
                 var singleParcel = new OrderParcel()
                 {
-                    Dimensions = parcelsDimensions.Dimensions
+                    Dimensions = parcelsDimensions.Dimensions,
+                    Weight = parcelsDimensions.Weight
                 };
                 return singleParcel;
             }
 
             return null;
+        }
+
+        private ParcelPrice GetParcelPrice(OrderParcel parcel, SpecPrice priceSpec)
+        {
+            return priceService.GetParcelPrice(parcel, priceSpec);
         }
 
         private ParcelSpec SelectSpec(List<ParcelSpec> allSpec, Parcel singleParcel)
@@ -56,6 +68,12 @@ namespace CourierKata.OrderCalculator.Services
             {
                 // throw new Exception();
                 return null;
+            }
+
+            var checkWeightFirst = allSpec.FirstOrDefault(x => x.Selection == Select.WeightOnly);
+            if (checkWeightFirst != null && singleParcel.Weight > checkWeightFirst.WeightLimit)
+            {
+                return checkWeightFirst;
             }
 
             var selectedSpec = allSpec.Where(x => x.Selection == Select.AllDimensions).FirstOrDefault(x => x.Dimensions.Length > singleParcel.Dimensions.Length && x.Dimensions.Width > singleParcel.Dimensions.Width && x.Dimensions.Height > singleParcel.Dimensions.Height);

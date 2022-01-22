@@ -4,9 +4,8 @@ using System.Text;
 
 namespace CourierKata.OrderCalculator.Models
 {
-    public class Parcel
+    public class SpecPrice : Price
     {
-        public Dimensions Dimensions { get; set; }
-        public decimal Weight { get; set; }
+        public decimal ChargePerKg { get; set; }
     }
 }

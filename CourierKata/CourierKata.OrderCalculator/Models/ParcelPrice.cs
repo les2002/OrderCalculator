@@ -6,6 +6,7 @@ namespace CourierKata.OrderCalculator.Models
 {
     public class ParcelPrice : Price
     {
+        public decimal WeightCost { get; set; }
         public decimal SizeCost { get; set; }
     }
 }
