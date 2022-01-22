@@ -9,7 +9,7 @@ namespace CourierKata.OrderCalculator.Services
     public class ParcelService : IParcelService
     {
         private readonly IPriceService priceService;
-        private readonly List<ParcelSpec> specData;
+        private readonly List<ParcelSpec> specData; // add repository to get this data
 
         public ParcelService(IPriceService _priceService, List<ParcelSpec> _specData)
         {
@@ -36,6 +36,7 @@ namespace CourierKata.OrderCalculator.Services
             return orderParcels;
         }
 
+        // move this method to seperate service
         private OrderParcel MappParcel(Parcel parcelsDimensions)
         {
             if (parcelsDimensions != null)
@@ -56,6 +57,7 @@ namespace CourierKata.OrderCalculator.Services
             return priceService.GetParcelPrice(parcel, priceSpec);
         }
 
+        // move this method to seperate service
         private ParcelSpec SelectSpec(List<ParcelSpec> allSpec, Parcel singleParcel)
         {
             if (allSpec == null)

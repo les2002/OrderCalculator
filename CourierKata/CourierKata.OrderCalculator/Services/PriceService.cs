@@ -17,6 +17,7 @@ namespace CourierKata.OrderCalculator.Services
             discountService = _discountService;
         }
 
+        // move this method to seperate service
         public ParcelPrice GetParcelPrice(OrderParcel parcel, SpecPrice priceSpec)
         {
             var parcelPrice = new ParcelPrice() { Currency = priceSpec.Currency };
@@ -29,6 +30,7 @@ namespace CourierKata.OrderCalculator.Services
             return parcelPrice;
         }
 
+        // move this method to seperate service
         public OrderPrice GetOrderPrice(List<OrderParcel> parcels)
         {
             var orderPrice = new OrderPrice();

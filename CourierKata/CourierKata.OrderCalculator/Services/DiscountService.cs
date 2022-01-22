@@ -6,6 +6,7 @@ using System.Text;
 
 namespace CourierKata.OrderCalculator.Services
 {
+    // break this service so we can inject discounts
     public class DiscountService : IDiscountService
     {
         public decimal GetDiscount(List<OrderParcel> parcelOrder)
