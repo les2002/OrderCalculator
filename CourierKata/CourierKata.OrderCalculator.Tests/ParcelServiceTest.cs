@@ -11,11 +11,13 @@ namespace CourierKata.OrderCalculator.Tests
     {
         private IParcelService parcelService;
         private IPriceService priceService;
+        private IDiscountService discountService;
 
         [SetUp]
         public void Setup()
         {
-            priceService = new PriceService(2);
+            discountService = new DiscountService();
+            priceService = new PriceService(2, discountService);
             parcelService = new ParcelService(priceService, ParcelSpecData.specData);
         }
 

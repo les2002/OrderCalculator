@@ -9,10 +9,12 @@ namespace CourierKata.OrderCalculator.Services
     public class PriceService : IPriceService
     {
         private readonly decimal speedyShipping;
+        private readonly IDiscountService discountService;
 
-        public PriceService(decimal _speedyShipping)
+        public PriceService(decimal _speedyShipping, IDiscountService _discountService)
         {
             speedyShipping = _speedyShipping;
+            discountService = _discountService;
         }
 
         public ParcelPrice GetParcelPrice(OrderParcel parcel, SpecPrice priceSpec)
@@ -42,8 +44,10 @@ namespace CourierKata.OrderCalculator.Services
             }
 
             orderPrice.Currency = parcels.FirstOrDefault().Price.Currency;
-            orderPrice.Cost = parcels.Sum(x => x.Price.Cost);
+            orderPrice.Discount = discountService.GetDiscount(parcels);
+            orderPrice.Cost = parcels.Sum(x => x.Price.Cost) - orderPrice.Discount;
             orderPrice.SpeedyCost = orderPrice.Cost * speedyShipping;
+            
             return orderPrice;
         }
     }
