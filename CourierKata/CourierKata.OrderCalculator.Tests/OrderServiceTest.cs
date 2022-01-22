@@ -17,6 +17,7 @@ namespace CourierKata.OrderCalculator.Tests
         [SetUp]
         public void Setup()
         {
+
             priceService = new PriceService(2);
             parcelService = new ParcelService(priceService, ParcelSpecData.specData);
             orderService = new OrderService(parcelService, priceService);
@@ -45,10 +46,12 @@ namespace CourierKata.OrderCalculator.Tests
             parcels.Add(parcel);
             parcel = new Parcel() { Dimensions = new Dimensions() { Height = 101, Length = 101, Width = 101 }, Weight = 1 };
             parcels.Add(parcel);
+            parcel = new Parcel() { Dimensions = new Dimensions() { Height = 101, Length = 101, Width = 101 }, Weight = 51 };
+            parcels.Add(parcel);
             var orderResult = orderService.GetOrder(parcels);
-            Assert.AreEqual(orderResult.Price.Cost, 48);
-            Assert.AreEqual(orderResult.Price.SpeedyCost, 96);
-            Assert.AreEqual(orderResult.Parcels.Count(), 3);
+            Assert.AreEqual(orderResult.Price.Cost, 99);
+            Assert.AreEqual(orderResult.Price.SpeedyCost, 198);
+            Assert.AreEqual(orderResult.Parcels.Count(), 4);
         }
     }
 }

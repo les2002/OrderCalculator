@@ -9,6 +9,7 @@ namespace CourierKata.OrderCalculator.Models
         Small,
         Medium,
         Large,
-        XL
+        XL,
+        Heavy
     }
 }

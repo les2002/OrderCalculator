@@ -40,6 +40,14 @@ namespace CourierKata.OrderCalculator.Tests
                     Pricing = new SpecPrice() { Currency = "$", Cost = 25, ChargePerKg = 2},
                     WeightLimit = 10,
                     Selection = Select.AnyDimension
+                },
+                new ParcelSpec()
+                {
+                    Type = ParcelType.Heavy,
+                    Dimensions = null,
+                    Pricing = new SpecPrice() { Currency = "$", Cost = 50, ChargePerKg = 1},
+                    WeightLimit = 50,
+                    Selection = Select.WeightOnly
                 }
             };
     }
